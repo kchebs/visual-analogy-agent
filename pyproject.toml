@@ -9,7 +9,7 @@ description = "Visual analogy agent for Raven's Progressive Matrices (2x2 and 3x
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "All Rights Reserved" }
-authors = [{ name = "kchebs" }]
+authors = []
 dependencies = [
   "Pillow>=9.0,<12",
   "numpy>=1.20,<3",
