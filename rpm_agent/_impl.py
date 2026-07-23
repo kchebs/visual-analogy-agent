@@ -1023,18 +1023,18 @@ class Agent:
                 for i in sorted(problem.figures):
                     if i.isnumeric():
                         instance = refTB(b_image, PIM.open(problem.figures[i].visualFilename).convert('L'))
-                        dinstance = (drk_pxl_perc(c_image_arr, get_imgs(problem, i)) - top) / top
+                        dinstance = 0.0 if top == 0 else (drk_pxl_perc(c_image_arr, get_imgs(problem, i)) - top) / top
                         diff.append(instance)
                         drk.append(dinstance)
-                    for d in drk:
-                        if -0.02 <= d <= 0.02:  # within 20% change of the top change
-                            index = int(drk.index(d))
-                            inx.append(index)
-                            final.append(diff[index])
-                    try:
-                        ans = int(1 + inx[final.index(min(final))])
-                    except:
-                        ans = int(1 + diff.index(min(diff)))
+                for d in drk:
+                    if -0.02 <= d <= 0.02:  # within 20% change of the top change
+                        index = int(drk.index(d))
+                        inx.append(index)
+                        final.append(diff[index])
+                try:
+                    ans = int(1 + inx[final.index(min(final))])
+                except Exception:
+                    ans = int(1 + diff.index(min(diff)))
             elif 12 < ff_check(a_image, b_image) < 15:
                 diff = []
                 for i in sorted(problem.figures):
@@ -1048,7 +1048,7 @@ class Agent:
                 for i in sorted(problem.figures):
                     if i.isnumeric():
                         instance = rot270(c_image, PIM.open(problem.figures[i].visualFilename).convert('L'))
-                        inst = (instance - top) / top
+                        inst = 0.0 if top == 0 else (instance - top) / top
                         diff.append(inst)
                 ans = int(1 + diff.index(min(diff, key=abs)))
             elif diff_finder(a_image, b_image) > 1.0 > refLR(a_image, b_image):
@@ -1069,22 +1069,22 @@ class Agent:
                     if i.isnumeric():
                         instance = refTB(b_image, PIM.open(problem.figures[i].visualFilename).convert('L'))
                         rinstance = rot90(c_image, PIM.open(problem.figures[i].visualFilename).convert('L'))
-                        dinstance = (drk_pxl_perc(c_image_arr, get_imgs(problem, i)) - top) / top
+                        dinstance = 0.0 if top == 0 else (drk_pxl_perc(c_image_arr, get_imgs(problem, i)) - top) / top
                         diff.append(instance)
                         rdiff.append(rinstance)
                         drk.append(dinstance)
-                    if min(diff) < min(rdiff) + 0.00029:  # standard deviation / error
-                        for i in drk:
-                            if -0.2 <= i <= 0.2:  # within 20% change of the top change
-                                index = int(drk.index(i))
-                                inx.append(index)
-                                final.append(diff[index])
-                        try:
-                            ans = int(1 + inx[final.index(min(final))])
-                        except:
-                            ans = int(1 + diff.index(min(diff)))
-                    else:
-                        ans = int(1 + rdiff.index(min(rdiff)))
+                if diff and rdiff and min(diff) < min(rdiff) + 0.00029:  # standard deviation / error
+                    for i in drk:
+                        if -0.2 <= i <= 0.2:  # within 20% change of the top change
+                            index = int(drk.index(i))
+                            inx.append(index)
+                            final.append(diff[index])
+                    try:
+                        ans = int(1 + inx[final.index(min(final))])
+                    except Exception:
+                        ans = int(1 + diff.index(min(diff)))
+                else:
+                    ans = int(1 + rdiff.index(min(rdiff))) if rdiff else 1
             elif 1.0 > refLR(a_image, c_image):
                 diff = []
                 for i in sorted(problem.figures):
