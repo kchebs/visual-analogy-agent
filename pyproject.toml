@@ -17,9 +17,16 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0,<9"]
+torch = ["torch>=2.0,<3"]
 
 [tool.setuptools]
-packages = ["rpm_agent"]
+packages = [
+  "rpm_agent",
+  "baselines",
+  "baselines.torch",
+  "baselines.llm",
+  "eval",
+]
 py-modules = [
   "Agent",
   "ProblemSet",
@@ -29,6 +36,9 @@ py-modules = [
   "RavensProblem",
   "RavensProject",
 ]
+
+[tool.setuptools.package-data]
+"baselines.torch" = ["*.pt"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

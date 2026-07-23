@@ -23,4 +23,12 @@ run_py() {
 echo "== RPM smoke (interpreter: $PY) =="
 run_py -m pytest -q
 run_py scripts/emit_eval_metrics.py
+
+# Torch bake-off: prefer .venv; install optional [torch] if missing
+if ! run_py -c "import torch" >/dev/null 2>&1; then
+  echo "== installing optional torch into interpreter env =="
+  run_py -m pip install -q '.[torch]' || run_py -m pip install -q 'torch>=2.0,<3' || true
+fi
+run_py scripts/run_bakeoff.py
+
 echo "SMOKE PASS"
