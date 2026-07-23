@@ -45,11 +45,13 @@ flowchart LR
 
 | Layer | Role |
 |-------|------|
-| [`Agent.py`](Agent.py) | Core solver — 2×2 and 3×3 visual analogy logic |
+| [`rpm_agent/`](rpm_agent/) | Packaged solver — `detect` → `score` → `compose` stages + typed `Agent` |
+| [`Agent.py`](Agent.py) | Compatibility shim (`from rpm_agent import Agent`) |
 | [`RavensProblem.py`](RavensProblem.py) / [`RavensFigure.py`](RavensFigure.py) | Problem and figure representations |
 | [`ProblemSet.py`](ProblemSet.py) | Loads problem folders under `Problems/` |
 | [`RavensProject.py`](RavensProject.py) | Batch runner — writes `AgentAnswers.csv` |
 | [`RavensGrader.py`](RavensGrader.py) | Compares answers to ground truth; writes scorecards |
+| [`scripts/emit_eval_metrics.py`](scripts/emit_eval_metrics.py) | CI artifact from `SetResults.csv` → `artifacts/eval_metrics.json` |
 
 **How the agent reasons (high level):**
 

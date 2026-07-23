@@ -22,4 +22,5 @@ run_py() {
 
 echo "== RPM smoke (interpreter: $PY) =="
 run_py -m pytest -q
+run_py scripts/emit_eval_metrics.py
 echo "SMOKE PASS"
